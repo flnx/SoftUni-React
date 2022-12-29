@@ -1,0 +1,80 @@
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+    gap: 2rem;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.flex {
+    padding: 2rem;
+    border: 1px solid rgba(177, 150, 77, 0.751);
+    border-radius: 5px;
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    padding: 0.5rem 1rem;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.drinks dt, .drinks dd {
+    margin: 0;
+    padding: .1rem;
+}
+
+.drinks dt {
+    color: skyblue;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.drinks dd {
+    font-style: italic;
+    font-size: 1.5rem;
+}
