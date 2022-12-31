@@ -1,8 +1,6 @@
 const host = 'http://localhost:3030/jsonstore/todos/';
 
 async function request(method, url = '/', data) {
-    console.log(method);
-
     const config = {
         method,
         headers: {
@@ -10,7 +8,7 @@ async function request(method, url = '/', data) {
         },
     };
 
-    if (data != undefined) {
+    if (data !== undefined) {
         config.body = JSON.stringify(data);
     }
 
@@ -22,7 +20,7 @@ async function request(method, url = '/', data) {
             throw new Error(error.message);
         }
 
-        if (response.status == 204) {
+        if (response.status === 204) {
             return response;
         } else {
             return response.json();

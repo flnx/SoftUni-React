@@ -1,7 +1,7 @@
 import { Item } from './Item';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import * as api from './api/api';
+import * as api from '../api/api';
 import styles from './Section.module.css';
 
 export const Section = () => {
@@ -13,13 +13,13 @@ export const Section = () => {
 
     const handleDelete = (todoId) => {
         api.delete(todoId);
-        setTodos((todoList) => todoList.filter((x) => x._id != todoId));
+        setTodos((todoList) => todoList.filter((x) => x._id !== todoId));
     };
 
     const handleChange = (todo) => {
         setTodos((todoList) =>
             todoList.map((x) =>
-                x._id == todo._id ? { ...x, isCompleted: !todo.isCompleted } : x
+                x._id === todo._id ? { ...x, isCompleted: !todo.isCompleted } : x
             )
         );
 
@@ -28,7 +28,7 @@ export const Section = () => {
 
     return (
         <section className={styles.content}>
-            {todos.length == 0 ? (
+            {todos.length === 0 ? (
                 <li>Loading...</li>
             ) : (
                 todos.map((item) => (
