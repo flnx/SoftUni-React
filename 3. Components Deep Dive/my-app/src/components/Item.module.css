@@ -1,0 +1,28 @@
+.item {
+    background: rgb(28, 51, 60);
+    border-radius: 5px;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5em;
+}
+
+.left-side {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.name {
+    font-weight: 600;
+}
+
+.delete {
+    cursor: pointer;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: rgb(238, 233, 233);
+}

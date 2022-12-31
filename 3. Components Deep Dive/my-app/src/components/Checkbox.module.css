@@ -1,0 +1,28 @@
+.checkbox input[type='checkbox'] {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    width: 1.6em;
+    height: 1.6em;
+    border-radius: 0.15em;
+    margin-right: 0.5em;
+    border: 0.15em solid #007a7e;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+}
+
+input:checked {
+    background-color: #007a7e;
+    position: relative;
+}
+
+input:checked::before {
+    content: '\2714';
+    font-size: 1.25em;
+    color: #fff;
+    position: absolute;
+    right: 2px;
+    top: -5px;
+}
