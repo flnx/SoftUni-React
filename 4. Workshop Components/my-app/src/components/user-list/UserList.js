@@ -1,8 +1,102 @@
+import { useEffect, useState } from "react";
+
+import * as api from "../../api/service";
+
+import { UserActions } from "../UserListConstants";
 import { UserItem } from "./user-item/UserItem";
+import { UserCreate } from "./user-create/UserCreate";
+import { UserEdit } from "./user-edit/UserEdit";
+import { UserDelete } from "./user-delete/UserDelete";
+import { UserDetails } from "./user-details/UserDetails";
+
 
 export const UserList = () => {
+    const [users, setUsers] = useState([]);
+    const [userAction, setUserAction] = useState({ user: null, action: null });
+
+    useEffect(() => {
+        api.getUsers()
+            .then((data) => setUsers(Object.values(data)));
+    }, []);
+
+    const closeHandler = () => {
+        setUserAction({ user: null, action: null });
+    }
+
+    const userActionsHandler = (userId, actionType) => {
+        api.getUser(userId)
+            .then(user => {
+                setUserAction({ user, action: actionType });
+            });
+    }
+
+    const createHandler = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+
+        const {
+            firstName,
+            lastName,
+            email,
+            imageUrl,
+            phoneNumber,
+            ...address
+        } = Object.fromEntries(formData)
+
+        const userData = {
+            firstName,
+            lastName,
+            email,
+            imageUrl,
+            phoneNumber,
+            address
+        }
+
+        api.createUser(userData)
+            .then(user => {
+                setUsers(oldUsers => [...oldUsers, user]);
+                closeHandler();
+            });
+    }
+    
+    const deleteHandler = async (userId) => {
+        await api.deleteUser(userId);
+
+        setUsers(oldUsers => [...oldUsers].filter(x  => x._id != userId));
+        closeHandler();
+    }
+
     return (
         <>
+            {userAction.action == UserActions.Add &&
+                <UserCreate
+                    onClose={closeHandler}
+                    onCreate={createHandler}
+                />
+            }
+
+            {userAction.action == UserActions.Edit &&
+                <UserEdit
+                    user={userAction.user}
+                    onClose={closeHandler}
+                />
+            }
+
+            {userAction.action == UserActions.Details &&
+                <UserDetails
+                    user={userAction.user}
+                    onClose={closeHandler}
+                />
+            }
+
+            {userAction.action == UserActions.Delete &&
+                <UserDelete
+                    user={userAction.user}
+                    onClose={closeHandler}
+                    onDelete={deleteHandler}
+                />
+            }
             <div className="table-wrapper">
                 <table className="table">
                     <thead>
@@ -61,11 +155,17 @@ export const UserList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <UserItem />
+                        {users.map(user =>
+                            <UserItem
+                                key={user._id}
+                                user={user}
+                                onActionClick={userActionsHandler}
+                            />
+                        )}
                     </tbody>
                 </table>
             </div>
-            <button className="btn-add btn">Add new user</button>
+            <button className="btn-add btn" onClick={() => userActionsHandler(null, UserActions.Add)}>Add new user</button>
         </>
     );
 }

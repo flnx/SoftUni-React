@@ -1,0 +1,58 @@
+{
+    "fe7e3de4-28dc-4199-9209-ecf832ef6466": {
+        "firstName": "Julia",
+        "lastName": "Ivanova",
+        "email": "julia@abv.bg",
+        "imageUrl": "https://randomuser.me/api/portraits/women/57.jpg",
+        "phoneNumber": "0888123123",
+        "address": {
+            "country": "Bulgaria",
+            "city": "Plovdiv",
+            "street": "Pirotska",
+            "streetNumber": 1
+        },
+        "_id": "fe7e3de4-28dc-4199-9209-ecf832ef6466"
+    },
+    "fa153181-ed39-4282-a27d-d8a28ac9de95": {
+        "firstName": "Natalia",
+        "lastName": "Stefanova",
+        "email": "natalia@abv.bg",
+        "imageUrl": "https://randomuser.me/api/portraits/women/43.jpg",
+        "phoneNumber": "0888111222",
+        "address": {
+            "country": "Bulgaria",
+            "city": "Sofia",
+            "street": "Stara Planina",
+            "streetNumber": 5
+        },
+        "_id": "fa153181-ed39-4282-a27d-d8a28ac9de95"
+    },
+    "5162b69f-5860-49be-a1cb-691b28a9521d": {
+        "firstName": "Petar",
+        "lastName": "Mihalev",
+        "email": "pesho@abv.bg",
+        "imageUrl": "https://randomuser.me/api/portraits/men/78.jpg",
+        "phoneNumber": "0888111222",
+        "address": {
+            "country": "Bulgaria",
+            "city": "Varna",
+            "street": "Lyuben Karavelov 15",
+            "streetNumber": 10
+        },
+        "_id": "5162b69f-5860-49be-a1cb-691b28a9521d"
+    },
+    "80b2b340-6eab-4939-8848-5b8fe7f64ead": {
+        "firstName": "Georgi",
+        "lastName": "Zdravkov",
+        "email": "gosho@abv.bg",
+        "imageUrl": "https://randomuser.me/api/portraits/men/53.jpg",
+        "phoneNumber": "0888111222",
+        "address": {
+            "country": "Bulgaria",
+            "city": "Burgas",
+            "street": "Hristo Botev",
+            "streetNumber": 4
+        },
+        "_id": "80b2b340-6eab-4939-8848-5b8fe7f64ead"
+    }
+}
