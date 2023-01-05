@@ -1,0 +1,74 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.form-control div {
+    margin-bottom: .8rem;
+}
+
+.form-field {
+    padding: .8rem;
+    border: none;
+    width: 15rem;
+    border-radius: 5px;
+}
+
+.terms {
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.terms label {
+    margin-top: -6px;
+}
+
+.terms input {
+    background-color: #fff;
+    margin: 0;
+    width: 1.8em;
+    height: 1.8em;
+}
+
+.select {
+    color: #fff;
+    background: rgb(43, 49, 100);
+    font-weight: 900;
+    border: 1px solid rgb(229, 226, 226);
+    border-radius: 5px;
+    width: 100%;
+    padding: .5rem;
+}
+
+.fieldset-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fieldset-item label{
+    text-align: left;
+}
+
+.btn {
+    margin-top: 2rem;
+    background: rgb(152, 37, 37);
+    color: #fff;
+    font-weight: 900;
+    padding: 1rem 3rem;
+    border: 1px solid rgb(237, 232, 232);
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+}
