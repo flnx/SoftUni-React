@@ -4,18 +4,31 @@ export const createUser = async (data) => {
     const res = await fetch(URL, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
     });
 
     return res.json();
-}
+};
+
+export const editUser = async (data, userId) => {
+    const res = await fetch(URL + userId, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+
+    return res.json();
+};
+
 
 export const getUsers = async () => {
     const res = await fetch(URL);
     return res.json();
-}
+};
 
 export const getUser = async (userId) => {
     if (!userId) {
@@ -32,9 +45,9 @@ export const deleteUser = async (userId) => {
     const res = await fetch(URL + userId, {
         method: 'DELETE',
         headers: {
-            'Content-Type': 'application/json'
-        }
+            'Content-Type': 'application/json',
+        },
     });
 
     return res.json();
-}
+};
