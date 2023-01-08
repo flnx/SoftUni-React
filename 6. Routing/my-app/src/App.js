@@ -7,24 +7,42 @@ import {
 
 // pages
 import Home from './components/Home';
-import Products from './components/Products';
+import Characters, { CharactersLoader } from './components/Characters';
 import About from './components/About';
-import Contact from './components/contact';
-import Faq from './components/faq';
+import Contact from './components/Contact';
+import Faq from './components/Faq';
 import NotFound from './components/NotFound';
+import CharacterDetails, {
+    characterDetailsLoader,
+} from './components/CharacterDetails';
 
 // layouts
 import RootLayout from './layout/RootLayout';
+import CharactersLayout from './layout/CharactersLayout';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<RootLayout />}>
             <Route index element={<Home />} />
-            <Route path="about" element={<About />} >
-               <Route path="faq" element={<Faq />}/>
-               <Route path="contact" element={<Contact />}/>
+
+            <Route path="about" element={<About />}>
+                <Route path="faq" element={<Faq />} />
+                <Route path="contact" element={<Contact />} />
             </Route>
-            <Route path="products" element={<Products />}/>
+
+            <Route path="characters" element={<CharactersLayout />}>
+                <Route
+                    index
+                    element={<Characters />}
+                    loader={CharactersLoader}
+                />
+                <Route
+                    element={<CharacterDetails />}
+                    path=":id"
+                    loader={characterDetailsLoader}
+                />
+            </Route>
+
             <Route path="*" element={<NotFound />} />
         </Route>
     )

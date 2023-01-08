@@ -104,7 +104,7 @@ nav ul li {
     font-size: 1.5rem;
 }
 
-.about-wrapper h2  {
+.about-wrapper h2 {
     margin-bottom: 2rem;
 }
 
@@ -125,3 +125,26 @@ nav ul li {
 .about-info {
     max-width: 300px;
 }
+
+.people-wrapper {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.people-wrapper div {
+    border: 2px solid rgb(167, 66, 66);
+    padding: 1rem;
+}
+
+.person {
+    flex-basis: 30%;
+    color: rgb(229, 225, 19);
+}
+
+.person__name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color:rgb(247, 242, 242);
+}
+

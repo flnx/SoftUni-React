@@ -12,7 +12,7 @@ function Nav() {
                         <NavLink to="about">About</NavLink>
                     </li>
                     <li>
-                        <NavLink to="products">Products</NavLink>
+                        <NavLink to="characters">Characters</NavLink>
                     </li>
                 </ul>
             </nav>
