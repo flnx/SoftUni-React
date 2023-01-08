@@ -46,8 +46,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-
-
 /* Make images easier to work with */
 img,
 picture {
@@ -104,4 +102,26 @@ nav ul {
 
 nav ul li {
     font-size: 1.5rem;
+}
+
+.about-wrapper h2  {
+    margin-bottom: 2rem;
+}
+
+.about-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.about-links a {
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    background: rgb(96, 41, 41);
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.about-info {
+    max-width: 300px;
 }

@@ -1,5 +1,4 @@
 import { Link, Outlet } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
 
 function About() {
     return (
@@ -14,15 +13,15 @@ function About() {
                 <li>Lorem</li>
             </ul>
 
-            <p>More info</p>
-            <div>
+            <h2>More info</h2>
+            <div className="about-links">
                 <Link to="faq">FAQ</Link>
-            </div>
-            <div>
                 <Link to="contact">Contact</Link>
             </div>
 
-            <Outlet />
+            <div className="about-info">
+                <Outlet />
+            </div>
         </div>
     );
 }
