@@ -1,0 +1,107 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+body {
+    background: rgb(24, 21, 21);
+    color: #fff;
+}
+
+.container {
+    margin: 0 auto;
+    width: 1200px;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+p {
+    font-size: 1.3rem;
+}
+
+a {
+    color: rgb(167, 66, 66);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    opacity: 0.6;
+}
+
+nav {
+    background-color: rgb(0, 0, 0);
+    border: 1px solid #fff;
+}
+
+nav ul {
+    padding: 1rem;
+    display: flex;
+    gap: 3rem;
+}
+
+nav ul li {
+    font-size: 1.5rem;
+}
