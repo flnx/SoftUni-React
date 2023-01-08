@@ -11,6 +11,7 @@ import Products from './components/Products';
 import About from './components/About';
 import Contact from './components/contact';
 import Faq from './components/faq';
+import NotFound from './components/NotFound';
 
 // layouts
 import RootLayout from './layout/RootLayout';
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
                <Route path="contact" element={<Contact />}/>
             </Route>
             <Route path="products" element={<Products />}/>
+            <Route path="*" element={<NotFound />} />
         </Route>
     )
 );
