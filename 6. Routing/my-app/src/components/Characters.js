@@ -19,10 +19,10 @@ function Person({ person }) {
     return (
         <Link to={id} key={id} className="person">
             <div>
-                <p className="person__name">Name: {person?.name}</p>
-                <p>Height: {person?.height}</p>
-                <p>Birth Year: {person?.birth_year}</p>
-                <p>Eyes: {person?.eye_color}</p>
+                <p className="person__name">Name: {person.name}</p>
+                <p className="person__info">Height: {person.height}</p>
+                <p className="person__info">Birth Year: {person.birth_year}</p>
+                <p className="person__info">Eyes: {person.eye_color}</p>
             </div>
         </Link>
     );

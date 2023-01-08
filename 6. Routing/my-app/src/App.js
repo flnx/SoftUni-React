@@ -12,9 +12,8 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Faq from './components/Faq';
 import NotFound from './components/NotFound';
-import CharacterDetails, {
-    characterDetailsLoader,
-} from './components/CharacterDetails';
+import CharacterDetails, { characterDetailsLoader } from './components/CharacterDetails';
+import DetailsError from './components/CharacterDetailsError';
 
 // layouts
 import RootLayout from './layout/RootLayout';
@@ -40,6 +39,7 @@ const router = createBrowserRouter(
                     element={<CharacterDetails />}
                     path=":id"
                     loader={characterDetailsLoader}
+                    errorElement={<DetailsError />}
                 />
             </Route>
 
