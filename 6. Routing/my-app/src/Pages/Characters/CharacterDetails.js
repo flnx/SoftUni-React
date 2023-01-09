@@ -1,21 +1,27 @@
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, Await, defer } from 'react-router-dom';
+import { Suspense } from 'react';
+
 import Character from '../../components/Character';
+import { getCharacter } from '../../Services/api';
 
 export default function CharacterDetails() {
-    const character = useLoaderData();
+    const characterData = useLoaderData();
+
     return (
-        <Character person={character}/>
+        <Suspense fallback={<p>Loading...</p>}>
+            <Await resolve={characterData.info}>
+                {(characterData) => (
+                    <Character
+                        person={characterData}
+                    />
+                )}
+            </Await>
+        </Suspense>
     );
 }
 
 export const characterDetailsLoader = async ({ params }) => {
     const { id } = params;
 
-    const response = await fetch('https://swapi.dev/api/people/' + id);
-
-    if (!response.ok) {
-        throw Error('Cannot find this character');
-    }
-
-    return response.json();
+    return defer({ info: getCharacter(id) });
 };

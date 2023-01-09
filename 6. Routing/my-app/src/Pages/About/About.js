@@ -1,6 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 
-function About() {
+
+function About() { 
     return (
         <div className="about-wrapper">
             <h1>About</h1>
