@@ -1,5 +1,5 @@
 export const getCharacters = async () => {
-    const response = await fetch('https://swapi.dev/api/people/');
+    const response = await fetch('https://swapi.py4e.com/api/people/');
 
     if (!response.ok) {
         throw Error('Could not fetch the characters');
@@ -9,7 +9,7 @@ export const getCharacters = async () => {
 };
 
 export const getCharacter = async (id) => {
-    const response = await fetch('https://swapi.dev/api/people/' + id);
+    const response = await fetch('https://swapi.py4e.com/api/people/' + id);
 
     if (!response.ok) {
         throw Error('Cannot find this character');
