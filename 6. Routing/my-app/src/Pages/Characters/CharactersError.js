@@ -1,6 +1,6 @@
 import { Link, useRouteError } from "react-router-dom";
 
-export default function DetailsError() {
+export default function CharactersError() {
     const error = useRouteError();
 
     return (

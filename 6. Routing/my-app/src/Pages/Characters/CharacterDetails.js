@@ -1,15 +1,10 @@
 import { useLoaderData } from 'react-router-dom';
+import Character from '../../components/Character';
 
 export default function CharacterDetails() {
     const character = useLoaderData();
-
     return (
-        <>
-            <p className="person__name">Name: {character.name}</p>
-            <p className="person__info">Height: {character.height}</p>
-            <p className="person__info">Birth Year: {character.birth_year}</p>
-            <p className="person__info">Eyes: {character.eye_color}</p>
-        </>
+        <Character person={character}/>
     );
 }
 
