@@ -1,3 +1,5 @@
+@import '../../styles/global.css';
+
 /* visually hidden (but still accessible for screen readers) */
 input[type='checkbox'] {
     clip: rect(0 0 0 0);
@@ -13,17 +15,17 @@ input[type='checkbox'] {
 
 .checkbox {
     display: block;
-    height: 26px;
-    width: 26px;
+    height: 22px;
+    width: 22px;
     background: #fff;
     border: 2px transparent solid;
     border-radius: 2px;
     cursor: pointer;
+    margin-right: 1em;
 }
 
 .checkbox-active {
-    border-color: purple;
-    background: purple;
+    background: var(--secondary-color);
     animation: draw-checkbox ease-in-out 0.3s forwards;
     stroke-dasharray: 33;
 }

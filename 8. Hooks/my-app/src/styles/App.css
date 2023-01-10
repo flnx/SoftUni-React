@@ -1,5 +1,5 @@
 body {
-    background: url('../assets/image.jpg') no-repeat 0% 100%/cover;
+    background: url('../assets/image.jpg') no-repeat 0% 100% / cover;
 }
 
 .App {
@@ -18,11 +18,12 @@ body {
 header {
     display: flex;
     align-items: flex-end;
-    margin-bottom: 1rem
+    margin-bottom: 1rem;
 }
 
 main {
     background: rgba(0, 0, 0, 0.309);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    
 }

@@ -10,6 +10,7 @@
     align-items: center;
 }
 
+
 .trash-icon {
     cursor: pointer;
 }
@@ -17,4 +18,15 @@
 .todo-item__wrapper span {
     font-size: 1rem;
     font-weight: 700;
+}
+
+.completed {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    color: rgb(220, 211, 211);
+}
+
+.todo-item__wrapper section {
+    display: flex;
+    align-items: center;
 }

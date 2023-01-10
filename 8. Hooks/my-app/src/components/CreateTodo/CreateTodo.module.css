@@ -1,3 +1,5 @@
+@import '../../styles/global.css';
+
 .form-control {
     display: flex;
     gap: 0.65rem;
@@ -19,7 +21,7 @@
 .btn {
     border-radius: 5px;
     display: inline-block;
-    background: rgb(218, 184, 15);
+    background: var(--secondary-color);
     color: #fff;
     font-weight: bold;
     font-size: 1.3rem;

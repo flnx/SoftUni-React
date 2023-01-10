@@ -1,14 +1,7 @@
-import { useState } from 'react';
 
 import styles from './Checkbox.module.css';
 
-export const Checkbox = () => {
-    const [isChecked, setIsChecked] = useState(false);
-
-    const changeHandler = () => {
-        setIsChecked((prev) => !prev);
-    };
-
+export const Checkbox = ({ changeHandler, isChecked }) => {
     return (
         <label>
             <input
