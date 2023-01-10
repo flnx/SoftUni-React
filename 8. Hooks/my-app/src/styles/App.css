@@ -1,15 +1,15 @@
+body {
+    background: url('../assets/image.jpg') no-repeat 0% 100%/cover;
+}
+
 .App {
-    background-color: #282c34;
     min-height: 100vh;
     color: #fff;
 }
 
 .container {
-    width: 100%;
-    height: 100%;
     padding: 2rem 1rem;
     display: grid;
-    gap: 0rem;
     grid-template-columns: minmax(auto, 30rem);
     grid-template-rows: auto 55vh 1fr;
     justify-content: center;
@@ -22,7 +22,7 @@ header {
 }
 
 main {
-    background: rgb(150, 90, 90);
+    background: rgba(0, 0, 0, 0.309);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
