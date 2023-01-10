@@ -5,7 +5,7 @@ import { Checkbox } from './Checkbox';
 
 import styles from './TodoItem.module.css';
 
-export const TodoItem = () => {
+export const TodoItem = ({_id, deleteHandler, isCompleted, name}) => {
     const [isChecked, setIsChecked] = useState(false);
 
     const changeHandler = () => {
@@ -20,9 +20,15 @@ export const TodoItem = () => {
                         changeHandler={changeHandler}
                         isChecked={isChecked}
                     />
-                    <span className={isChecked ? styles.completed : ""}>Clean my room</span>
+                    <span className={isChecked ? styles.completed : ''}>
+                        {name}
+                    </span>
                 </section>
-                <Trash size={32} className={styles['trash-icon']} />
+                <Trash
+                    size={32}
+                    className={styles['trash-icon']}
+                    onClick={() => deleteHandler(_id)}
+                />
             </div>
         </li>
     );
