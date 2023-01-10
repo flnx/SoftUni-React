@@ -1,0 +1,38 @@
+/* visually hidden (but still accessible for screen readers) */
+input[type='checkbox'] {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+/* checkbox custom styling */
+
+.checkbox {
+    display: block;
+    height: 26px;
+    width: 26px;
+    background: #fff;
+    border: 2px transparent solid;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.checkbox-active {
+    border-color: purple;
+    background: purple;
+    animation: draw-checkbox ease-in-out 0.3s forwards;
+    stroke-dasharray: 33;
+}
+
+@keyframes draw-checkbox {
+    0% {
+        stroke-dashoffset: 33;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}

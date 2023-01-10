@@ -1,0 +1,13 @@
+@import '../../styles/global.css';
+
+.todos {
+    height: var(--height-todos);
+    overflow: scroll;
+    padding: 1rem;
+}
+
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
