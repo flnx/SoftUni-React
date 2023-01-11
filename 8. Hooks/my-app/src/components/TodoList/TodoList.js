@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { TodosContext } from '../../contexts/todos';
 
 import { TodoItem } from '../TodoItem/TodoItem';

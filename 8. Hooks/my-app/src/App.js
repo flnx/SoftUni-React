@@ -21,15 +21,6 @@ function App() {
         setTodos(() => allTodos);
     }, []);
 
-    const createHandler = (e, newTodo) => {
-        e.preventDefault();
-
-        setTodos((oldTodos) => [
-            ...oldTodos,
-            { _id: newTodo, name: newTodo, isCompleted: false },
-        ]);
-    };
-
     return (
         <div className="App">
             <div className="container">
@@ -41,7 +32,7 @@ function App() {
                         <TodoList />
                     </main>
                     <section>
-                        <CreateTodo createHandler={createHandler} />
+                        <CreateTodo />
                     </section>
                 </TodosContext.Provider>
             </div>

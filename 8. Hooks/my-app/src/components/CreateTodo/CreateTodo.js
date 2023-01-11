@@ -1,12 +1,27 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+
+import { TodosContext } from '../../contexts/todos';
 import styles from './CreateTodo.module.css';
 
-export const CreateTodo = ({ createHandler }) => {
+export const CreateTodo = () => {
     const [task, setTask] = useState('');
+    const {todos, setTodos} = useContext(TodosContext);
 
     const changeHandler = (e) => {
         setTask(() => e.target.value);
     };
+
+    const createHandler = (e, newTodo) => {
+        e.preventDefault();
+
+        setTodos((oldTodos) => [
+            ...oldTodos,
+            { _id: newTodo, name: newTodo, isCompleted: false },
+        ]);
+
+        setTask(() => '');
+    };
+
     return (
         <form action="" onSubmit={(e) => createHandler(e, task)}>
             <div className={styles['form-control']}>
