@@ -1,32 +1,32 @@
-.todo-item {
+.item {
     background: rgba(11, 11, 11, 0.182);
     padding: 1rem;
     border-radius: 5px;
 }
 
-.todo-item__wrapper {
+.wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-
-.trash-icon {
-    cursor: pointer;
-}
-
-.todo-item__wrapper span {
+.wrapper span {
     font-size: 1rem;
     font-weight: 700;
+}
+
+.item section {
+    display: flex;
+    align-items: center;
+}
+
+.trash-icon, .edit-icon {
+    cursor: pointer;
+    margin-left: 0.2em;
 }
 
 .completed {
     text-decoration: line-through;
     text-decoration-thickness: 2px;
     color: rgb(220, 211, 211);
-}
-
-.todo-item__wrapper section {
-    display: flex;
-    align-items: center;
 }

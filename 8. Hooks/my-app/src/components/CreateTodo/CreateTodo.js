@@ -5,10 +5,10 @@ import styles from './CreateTodo.module.css';
 
 export const CreateTodo = () => {
     const [task, setTask] = useState('');
-    const {todos, setTodos} = useContext(TodosContext);
+    const { setTodos } = useContext(TodosContext);
 
     const changeHandler = (e) => {
-        setTask(() => e.target.value);
+        setTask(e.target.value);
     };
 
     const createHandler = (e, newTodo) => {
@@ -19,11 +19,11 @@ export const CreateTodo = () => {
             { _id: newTodo, name: newTodo, isCompleted: false },
         ]);
 
-        setTask(() => '');
+        setTask('');
     };
 
     return (
-        <form action="" onSubmit={(e) => createHandler(e, task)}>
+        <form onSubmit={(e) => createHandler(e, task)}>
             <div className={styles['form-control']}>
                 <input
                     type="text"

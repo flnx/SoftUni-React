@@ -1,4 +1,3 @@
-
 import styles from './Checkbox.module.css';
 
 export const Checkbox = ({ changeHandler, isChecked }) => {

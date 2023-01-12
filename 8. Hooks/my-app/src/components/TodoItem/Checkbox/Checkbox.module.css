@@ -1,4 +1,4 @@
-@import '../../styles/global.css';
+@import '../../../styles/global.css';
 
 /* visually hidden (but still accessible for screen readers) */
 input[type='checkbox'] {

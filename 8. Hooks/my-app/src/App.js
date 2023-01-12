@@ -22,21 +22,21 @@ function App() {
     }, []);
 
     return (
-        <div className="App">
-            <div className="container">
-                <header>
-                    <h1>TODO List</h1>
-                </header>
-                <TodosContext.Provider value={{ todos, setTodos }}>
+        <TodosContext.Provider value={{ todos, setTodos }}>
+            <div className="App">
+                <div className="container">
+                    <header>
+                        <h1>TODO List</h1>
+                    </header>
                     <main>
                         <TodoList />
                     </main>
                     <section>
                         <CreateTodo />
                     </section>
-                </TodosContext.Provider>
+                </div>
             </div>
-        </div>
+        </TodosContext.Provider>
     );
 }
 
