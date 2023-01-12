@@ -1,63 +1,39 @@
-import { useState, useEffect } from 'react';
-
 import { TodoList } from './components/TodoList/TodoList';
 import { CreateTodo } from './components/CreateTodo/CreateTodo';
 import { TodosContext } from './contexts/todos';
+import { useFetch } from './components/hooks/useFetch';
+import { useTodosApi } from './components/hooks/useTodos';
 
 import './styles/App.css';
 
 function App() {
-    const [todos, setTodos] = useState([]);
+    const [todos, setTodos, isLoading] = useFetch(
+        'http://localhost:3030/jsonstore/todos/'
+    );
+    
+    const { removeTodo, createTodo, updateTodo } = useTodosApi();
 
-    useEffect(() => {
-        fetch('http://localhost:3030/jsonstore/todos/')
-            .then((res) => res.json())
-            .then((data) => setTodos(Object.values(data)));
-    }, []);
-
-    const createHandler = (newTodoName) => {
-        fetch(`http://localhost:3030/jsonstore/todos/`, {
-            method: 'POST',
-            body: JSON.stringify({ name: newTodoName, isCompleted: false }),
-        })
-            .then((res) => res.json())
-            .then((newTodoData) => {
-                setTodos((state) => [...state, newTodoData]);
-            });
+    const createHandler = async (newTodo) => {
+        const data = await createTodo(newTodo);
+        setTodos((state) => [...state, data]);
     };
 
-    const editHandler = (todo, editedTodoName) => {
-        fetch(`http://localhost:3030/jsonstore/todos/${todo._id}`, {
-            method: 'PUT',
-            body: JSON.stringify({ ...todo, name: editedTodoName }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setTodos((state) =>
-                    state.map((x) => (x._id === todo._id ? data : x))
-                );
-            });
+    const editHandler = async (todo, editedTodoName) => {
+        const data = await updateTodo(todo, editedTodoName);
+
+        setTodos((state) => state.map((x) => (x._id === todo._id ? data : x)));
     };
 
     const deleteHandler = async (todoId) => {
-        await fetch(`http://localhost:3030/jsonstore/todos/${todoId}`, {
-            method: 'DELETE',
-        });
+        await removeTodo(todoId);
 
         setTodos((oldTodos) => oldTodos.filter((x) => x._id !== todoId));
     };
 
-    const checkBoxHandler = (todo) => {
-        fetch(`http://localhost:3030/jsonstore/todos/${todo._id}`, {
-            method: 'PUT',
-            body: JSON.stringify({ ...todo, isCompleted: !todo.isCompleted }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setTodos((state) =>
-                    state.map((x) => (x._id === todo._id ? data : x))
-                );
-            });
+    const checkBoxHandler = async (todo) => {
+        const data = await updateTodo(todo, false, todo.isCompleted);
+
+        setTodos((state) => state.map((x) => (x._id === todo._id ? data : x)));
     };
 
     return (
@@ -76,7 +52,7 @@ function App() {
                         <h1>TODO List</h1>
                     </header>
                     <main>
-                        <TodoList />
+                        {isLoading ? <h2>Loading...</h2> : <TodoList />}
                     </main>
                     <section>
                         <CreateTodo />
