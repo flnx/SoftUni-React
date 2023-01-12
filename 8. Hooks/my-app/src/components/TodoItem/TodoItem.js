@@ -37,11 +37,13 @@ export const TodoItem = ({ _id, isCompleted, name }) => {
         <li className={styles['item']}>
             <div className={styles['wrapper']}>
                 {isEdit ? (
-                    <EditTodo
-                        editHandler={editHandler}
-                        taskName={name}
-                        taskId={_id}
-                    />
+                    <section>
+                        <EditTodo
+                            editHandler={editHandler}
+                            taskName={name}
+                            taskId={_id}
+                        />
+                    </section>
                 ) : (
                     <section>
                         <Checkbox

@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState } from 'react';
+
+import styles from './EditTodo.module.css';
 
 export const EditTodo = ({ editHandler, taskName, taskId }) => {
     const [task, setTask] = useState(taskName);
@@ -8,11 +10,28 @@ export const EditTodo = ({ editHandler, taskName, taskId }) => {
     };
 
     return (
-        <div>
-            <form onSubmit={(e) => editHandler(e, task, taskId)}>
-                <input type="text" value={task} onChange={changeHandler} />
-                <input type="submit" value="save" />
-            </form>
-        </div>
+        <form
+            onSubmit={(e) => editHandler(e, task, taskId)}
+            className={styles.form}
+        >
+            <div>
+                <input
+                    type="text"
+                    value={task}
+                    onChange={changeHandler}
+                    className={styles['edit-item']}
+                />
+            </div>
+
+            <div>
+                <button
+                    type="submit"
+                    value="save"
+                    className={styles['edit-btn']}
+                >
+                    Save
+                </button>
+            </div>
+        </form>
     );
 };
