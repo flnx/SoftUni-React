@@ -6,23 +6,70 @@ import { TodosContext } from './contexts/todos';
 
 import './styles/App.css';
 
-const allTodos = [
-    { _id: 1, name: 'Clean the House', isCompleted: false },
-    { _id: 2, name: 'Shopping', isCompleted: false },
-    { _id: 3, name: 'Workout', isCompleted: false },
-    { _id: 5, name: 'Journal', isCompleted: false },
-    { _id: 6, name: 'Call Jimmy', isCompleted: false },
-];
-
 function App() {
     const [todos, setTodos] = useState([]);
 
     useEffect(() => {
-        setTodos(() => allTodos);
+        fetch('http://localhost:3030/jsonstore/todos/')
+            .then((res) => res.json())
+            .then((data) => setTodos(Object.values(data)));
     }, []);
 
+    const createHandler = (newTodoName) => {
+        fetch(`http://localhost:3030/jsonstore/todos/`, {
+            method: 'POST',
+            body: JSON.stringify({ name: newTodoName, isCompleted: false }),
+        })
+            .then((res) => res.json())
+            .then((newTodoData) => {
+                setTodos((state) => [...state, newTodoData]);
+            });
+    };
+
+    const editHandler = (todo, editedTodoName) => {
+        fetch(`http://localhost:3030/jsonstore/todos/${todo._id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ ...todo, name: editedTodoName }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setTodos((state) =>
+                    state.map((x) => (x._id === todo._id ? data : x))
+                );
+            });
+    };
+
+    const deleteHandler = async (todoId) => {
+        await fetch(`http://localhost:3030/jsonstore/todos/${todoId}`, {
+            method: 'DELETE',
+        });
+
+        setTodos((oldTodos) => oldTodos.filter((x) => x._id !== todoId));
+    };
+
+    const checkBoxHandler = (todo) => {
+        fetch(`http://localhost:3030/jsonstore/todos/${todo._id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ ...todo, isCompleted: !todo.isCompleted }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setTodos((state) =>
+                    state.map((x) => (x._id === todo._id ? data : x))
+                );
+            });
+    };
+
     return (
-        <TodosContext.Provider value={{ todos, setTodos }}>
+        <TodosContext.Provider
+            value={{
+                todos,
+                editHandler,
+                deleteHandler,
+                createHandler,
+                checkBoxHandler,
+            }}
+        >
             <div className="App">
                 <div className="container">
                     <header>
@@ -39,5 +86,4 @@ function App() {
         </TodosContext.Provider>
     );
 }
-
 export default App;

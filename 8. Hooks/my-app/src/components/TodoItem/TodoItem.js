@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { TodosContext } from '../../contexts/todos';
 
 import { Trash, Pen } from 'phosphor-react';
@@ -8,50 +8,49 @@ import { Checkbox } from './Checkbox/Checkbox';
 
 import styles from './TodoItem.module.css';
 
-export const TodoItem = ({ _id, isCompleted, name }) => {
-    const { setTodos } = useContext(TodosContext);
-
-    const [isChecked, setIsChecked] = useState(false);
+export const TodoItem = ({ todo }) => {
     const [isEdit, setIsEdit] = useState(false);
 
-    const checkboxHandler = () => setIsChecked((prev) => !prev);
+    const { editHandler, deleteHandler, checkBoxHandler } =
+        useContext(TodosContext);
+
     const onEdit = () => setIsEdit((prev) => !prev);
 
-    const editHandler = (e, newTaskName, taskId) => {
+    const onCheck = () => {
+        checkBoxHandler(todo);
+    };
+
+    const handleEdit = (e, newTodoName) => {
         e.preventDefault();
 
-        setTodos((currentTodos) =>
-            currentTodos.map((x) =>
-                x._id === taskId ? { ...x, name: newTaskName } : x
-            )
-        );
-
+        editHandler(todo, newTodoName);
         setIsEdit(false);
     };
 
-    const deleteHandler = (todoId) => {
-        setTodos((oldTodos) => oldTodos.filter((x) => x._id !== todoId));
-    };
+    useEffect(() => {
+        // console.log('mount');
+        return () => {
+            // console.log('unmount');
+        };
+    }, []);
 
     return (
         <li className={styles['item']}>
             <div className={styles['wrapper']}>
                 {isEdit ? (
                     <section>
-                        <EditTodo
-                            editHandler={editHandler}
-                            taskName={name}
-                            taskId={_id}
-                        />
+                        <EditTodo editHandler={handleEdit} todo={todo} />
                     </section>
                 ) : (
                     <section>
                         <Checkbox
-                            changeHandler={checkboxHandler}
-                            isChecked={isChecked}
+                            changeHandler={onCheck}
+                            isChecked={todo.isCompleted}
                         />
-                        <span className={isChecked ? styles.completed : ''}>
-                            {name}
+                        <span
+                            className={todo.isCompleted ? styles.completed : ''}
+                        >
+                            {todo.name}
                         </span>
                     </section>
                 )}
@@ -60,12 +59,12 @@ export const TodoItem = ({ _id, isCompleted, name }) => {
                     <Pen
                         size={32}
                         className={styles['edit-icon']}
-                        onClick={() => onEdit(_id)}
+                        onClick={onEdit}
                     />
                     <Trash
                         size={32}
                         className={styles['trash-icon']}
-                        onClick={() => deleteHandler(_id)}
+                        onClick={() => deleteHandler(todo._id)}
                     />
                 </section>
             </div>

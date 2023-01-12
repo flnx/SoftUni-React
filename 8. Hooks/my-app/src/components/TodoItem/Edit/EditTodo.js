@@ -2,22 +2,19 @@ import { useState } from 'react';
 
 import styles from './EditTodo.module.css';
 
-export const EditTodo = ({ editHandler, taskName, taskId }) => {
-    const [task, setTask] = useState(taskName);
+export const EditTodo = ({ editHandler, todo }) => {
+    const [todoName, setTodoName] = useState(todo.name);
 
     const changeHandler = (e) => {
-        setTask(e.target.value);
+        setTodoName(e.target.value);
     };
 
     return (
-        <form
-            onSubmit={(e) => editHandler(e, task, taskId)}
-            className={styles.form}
-        >
+        <form onSubmit={(e) => editHandler(e, todoName)} className={styles.form}>
             <div>
                 <input
                     type="text"
-                    value={task}
+                    value={todoName}
                     onChange={changeHandler}
                     className={styles['edit-item']}
                 />

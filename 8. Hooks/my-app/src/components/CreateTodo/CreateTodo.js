@@ -5,25 +5,21 @@ import styles from './CreateTodo.module.css';
 
 export const CreateTodo = () => {
     const [task, setTask] = useState('');
-    const { setTodos } = useContext(TodosContext);
+    const { createHandler } = useContext(TodosContext);
 
     const changeHandler = (e) => {
         setTask(e.target.value);
     };
 
-    const createHandler = (e, newTodo) => {
+    const onSubmit = (e) => {
         e.preventDefault();
 
-        setTodos((oldTodos) => [
-            ...oldTodos,
-            { _id: newTodo, name: newTodo, isCompleted: false },
-        ]);
-
+        createHandler(task);
         setTask('');
     };
 
     return (
-        <form onSubmit={(e) => createHandler(e, task)}>
+        <form onSubmit={(e) => onSubmit(e)}>
             <div className={styles['form-control']}>
                 <input
                     type="text"

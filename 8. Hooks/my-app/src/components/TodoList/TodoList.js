@@ -11,7 +11,10 @@ export const TodoList = () => {
         <div className={styles['todos']}>
             <ul className={styles['todo-list']}>
                 {todos.map((x) => (
-                    <TodoItem key={x._id} {...x} />
+                    <TodoItem 
+                        key={x._id} 
+                        todo={x} 
+                    />
                 ))}
             </ul>
         </div>
