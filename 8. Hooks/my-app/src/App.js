@@ -1,8 +1,8 @@
 import { TodoList } from './components/TodoList/TodoList';
 import { CreateTodo } from './components/CreateTodo/CreateTodo';
 import { TodosContext } from './contexts/todos';
-import { useFetch } from './components/hooks/useFetch';
-import { useTodosApi } from './components/hooks/useTodos';
+import { useFetch } from './hooks/useFetch';
+import { useTodosApi } from './hooks/useTodos';
 
 import './styles/App.css';
 
@@ -10,7 +10,7 @@ function App() {
     const [todos, setTodos, isLoading] = useFetch(
         'http://localhost:3030/jsonstore/todos/'
     );
-    
+
     const { removeTodo, createTodo, updateTodo } = useTodosApi();
 
     const createHandler = async (newTodo) => {
