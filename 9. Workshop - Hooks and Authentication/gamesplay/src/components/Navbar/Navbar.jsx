@@ -15,8 +15,7 @@ export const Navbar = () => {
                 </h1>
                 <div className="navbar">
                     <Link to="/catalog">All games</Link>
-                    {/* Logged-in users */}
-                    {auth.accessToken ? (
+                    {auth && auth.accessToken ? (
                         <div id="user">
                             <Link to="/create">Create Game</Link>
                             <Link to="#">Logout</Link>
@@ -27,7 +26,6 @@ export const Navbar = () => {
                             <Link to="/register">Register</Link>
                         </div>
                     )}
-                    {/* Guest users */}
                 </div>
             </div>
         </nav>
