@@ -2,6 +2,7 @@ import heroImg from '../../assets/images/four_slider_img01.png';
 import zombieImg from '../../assets/images/ZombieLang.png';
 import mineCraftImg from '../../assets/images/MineCraft.png';
 import coverFireImg from '../../assets/images/CoverFire.png';
+import { Link } from 'react-router-dom';
 
 export const Home = () => {
     return (
@@ -27,45 +28,9 @@ export const Home = () => {
                         <span>☆</span>
                     </div>
                     <div className="data-buttons">
-                        <a href="#" className="btn details-btn">
+                        <Link to="/catalog/:id" className="btn details-btn">
                             Details
-                        </a>
-                    </div>
-                </div>
-                <div className="game">
-                    <div className="image-wrap">
-                        <img src={zombieImg} />
-                    </div>
-                    <h3>Zombie Lang</h3>
-                    <div className="rating">
-                        <span>☆</span>
-                        <span>☆</span>
-                        <span>☆</span>
-                        <span>☆</span>
-                        <span>☆</span>
-                    </div>
-                    <div className="data-buttons">
-                        <a href="#" className="btn details-btn">
-                            Details
-                        </a>
-                    </div>
-                </div>
-                <div className="game">
-                    <div className="image-wrap">
-                        <img src={mineCraftImg} />
-                    </div>
-                    <h3>MineCraft</h3>
-                    <div className="rating">
-                        <span>☆</span>
-                        <span>☆</span>
-                        <span>☆</span>
-                        <span>☆</span>
-                        <span>☆</span>
-                    </div>
-                    <div className="data-buttons">
-                        <a href="#" className="btn details-btn">
-                            Details
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 {/* Display paragraph: If there is no games  */}
