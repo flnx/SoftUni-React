@@ -1,42 +1,21 @@
-import zombieImg from '../../assets/images/ZombieLang.png';
+import { useContext } from 'react';
+import { LoadingTemplate } from '../../components/Loading';
+import { GamesContext } from '../../context/GamesContext';
+import { AllGames } from './AllGames';
 
 export const Catalog = () => {
+    const { games, error, isPending } = useContext(GamesContext);
+
     return (
         <section id="catalog-page">
             <h1>All Games</h1>
-            {/* Display div: with information about every game (if any) */}
-            <div className="allGames">
-                <div className="allGames-info">
-                    <img src={zombieImg} />
-                    <h6>Action</h6>
-                    <h2>Cover Fire</h2>
-                    <a href="#" className="details-button">
-                        Details
-                    </a>
-                </div>
-            </div>
-            <div className="allGames">
-                <div className="allGames-info">
-                    <img src={zombieImg} />
-                    <h6>Action</h6>
-                    <h2>Zombie lang</h2>
-                    <a href="#" className="details-button">
-                        Details
-                    </a>
-                </div>
-            </div>
-            <div className="allGames">
-                <div className="allGames-info">
-                    <img src={zombieImg} />
-                    <h6>Action</h6>
-                    <h2>MineCraft</h2>
-                    <a href="#" className="details-button">
-                        Details
-                    </a>
-                </div>
-            </div>
-            {/* Display paragraph: If there is no games  */}
-            <h3 className="no-articles">No articles yet</h3>
+            {isPending ? 
+                <LoadingTemplate />
+              : error ? 
+                <Error error={error} />
+              : 
+                <AllGames games={games}/>
+             }            
         </section>
     );
 };
