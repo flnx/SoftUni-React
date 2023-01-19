@@ -1,27 +1,39 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-import { useFetch } from '../../hooks/useFetch';
+import * as api from '../../service/data';
 
 import { images } from '../../utils/images';
 
-const BASE_URL = 'http://localhost:3030/data/games/';
-
 export const Details = () => {
+    const [game, setGame] = useState(null);
+    const [comments, setComments] = useState(null);
+    const [error, setError] = useState(null);
+
     const { gameId } = useParams();
     const { auth } = useContext(AuthContext);
 
-    const [game, error, isPending] = useFetch(BASE_URL + gameId);
+    useEffect(() => {
+        const promises = [api.getById(gameId), api.getCommentsById(gameId)];
 
-    if (isPending) {
+        Promise.all(promises)
+            .then(([gameData, commentsData]) => {
+                setGame(gameData);
+                setComments(commentsData);
+            })
+            .catch((err) => setError(err.message || err));
+    }, [gameId]);
+
+
+    if (error) {
+        return <h1 className="error">{error}</h1>;
+    }
+
+    if (!game) {
         return <h1 className="error">Loading....</h1>;
     }
 
-    if (error) {
-        return <h1>{error}</h1>;
-    }
-
-    const isOwner = auth?._id === game._ownerId;
+    const isOwner = auth?._id === game?._ownerId;
 
     return (
         <section id="game-details">
