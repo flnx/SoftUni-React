@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-import * as user from '../../service/api';
+import * as user from '../../service/user';
 
 export const Register = () => {
     const [email, setEmail] = useState('');

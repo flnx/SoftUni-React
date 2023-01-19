@@ -13,7 +13,6 @@ export const useFetch = (url, config = {}) => {
                 setData(result);
             })
             .catch((err) => {
-                console.log(err);
                 setError(err.message || err);
             })
             .finally(() => {
