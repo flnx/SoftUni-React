@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Home, Catalog, Create, Edit, Details, Login, Register } from './pages/index';
 import { AuthContextProvider } from './context/AuthContext';
 import { GamesContextProvider } from './context/GamesContext';
+import { Logout } from './components/Logout';
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={<Register />} />
                             <Route path="/edit" element={<Edit />} />
+                            <Route path="/logout" element={<Logout />}/>
                         </Routes>
                     </main>
                 </div>

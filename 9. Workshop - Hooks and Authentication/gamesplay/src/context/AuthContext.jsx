@@ -4,10 +4,10 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
-    const [userData, setUserData] = useLocalStorage('userData', {});
+    const [auth, setUserData] = useLocalStorage('userData', {});
 
     return (
-        <AuthContext.Provider value={{ userData }}>
+        <AuthContext.Provider value={{ auth, setUserData }}>
             {props.children}
         </AuthContext.Provider>
     );

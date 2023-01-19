@@ -1,6 +1,31 @@
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+import * as user from '../../service/api';
+
 export const Login = () => {
-    const onSubmit = (e) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const { setUserData } = useContext(AuthContext);
+
+    const navigate = useNavigate();
+
+    const onSubmit = async (e) => {
         e.preventDefault();
+
+        if (email == '' || password == '') {
+            return setError('Fields must not be empty');
+        }
+
+        try {
+            const userData = await user.login({ email, password });
+            setUserData(userData);
+
+            navigate('/', { replace: true });
+        } catch (err) {
+            setError(err.message || err);
+        }
     };
 
     return (
@@ -11,21 +36,21 @@ export const Login = () => {
                     <label htmlFor="email">Email:</label>
                     <input
                         type="email"
-                        id="email"
                         name="email"
                         placeholder="Sokka@gmail.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <label htmlFor="login-pass">Password:</label>
                     <input
                         type="password"
-                        id="login-password"
                         name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
-                    <input
-                        type="submit"
-                        className="btn submit"
-                        value="Login"
-                    />
+
+                    {error && <p className="error">{error}</p>}
+                    <input type="submit" className="btn submit" value="Login" />
                     <p className="field">
                         <span>
                             If you don't have profile click <a href="#">here</a>
