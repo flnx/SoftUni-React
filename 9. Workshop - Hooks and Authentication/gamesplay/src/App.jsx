@@ -22,10 +22,10 @@ function App() {
                                 path="/catalog/:gameId"
                                 element={<Details />}
                             />
+                            <Route path="/catalog/:gameId/edit" element={<Edit />} />
                             <Route path="/create" element={<Create />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={<Register />} />
-                            <Route path="/edit" element={<Edit />} />
                             <Route path="/logout" element={<Logout />}/>
                         </Routes>
                     </main>

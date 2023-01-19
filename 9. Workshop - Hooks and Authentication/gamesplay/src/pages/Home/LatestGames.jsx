@@ -8,7 +8,7 @@ export const LatestGames = ({ games }) => {
                 games.map((game) => (
                     <div className="game" key={game._id}>
                         <div className="image-wrap">
-                            <img src={images[game.imageUrl]} />
+                            <img src={images[game.imageUrl] || game.imageUrl} />
                         </div>
                         <h3>{game.title}</h3>
                         <div className="rating">
