@@ -11,7 +11,7 @@ export const AllGames = ({ games }) => {
                             <img src={images[game.imageUrl] || game.imageUrl} alt="image" />
                             <h6>Action</h6>
                             <h2>{game.title}</h2>
-                            <Link to={`/catalog/${games._id}`} className="details-button">
+                            <Link to={`/catalog/${game._id}`} className="details-button">
                                 Details
                             </Link>
                         </div>
