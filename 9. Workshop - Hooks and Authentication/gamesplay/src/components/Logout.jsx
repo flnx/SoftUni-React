@@ -12,7 +12,7 @@ export const Logout = () => {
         user.logout(null, auth.accessToken);
 
         navigate('/', { replace: true });
-    },[]);
+    }, []);
 
     return;
 };

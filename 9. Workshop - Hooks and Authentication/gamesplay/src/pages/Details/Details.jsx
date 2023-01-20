@@ -20,7 +20,11 @@ export const Details = () => {
     const { gameId } = useParams();
 
     useEffect(() => {
-        const promises = [api.getById(gameId), api.getCommentsById(gameId)];
+        const promises = 
+        [
+            api.getById(gameId),
+            api.getCommentsById(gameId)
+        ];
 
         Promise.all(promises)
             .then(([gameData, commentsData]) => {
