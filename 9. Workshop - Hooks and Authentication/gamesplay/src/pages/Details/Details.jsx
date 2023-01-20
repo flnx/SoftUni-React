@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
-import { Comment } from './Comment';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
-import { Link } from 'react-router-dom';
+import { GamesContext } from '../../context/GamesContext';
+import { AuthContext } from '../../context/AuthContext';
+
+import { Comment } from './Comment';
 
 import * as api from '../../service/data';
 import { images } from '../../utils/images';
@@ -13,6 +14,8 @@ export const Details = () => {
     const [comments, setComments] = useState(null);
     const [error, setError] = useState(null);
     const { auth } = useContext(AuthContext);
+    const { deleteGame } = useContext(GamesContext);
+    const navigate = useNavigate();
 
     const { gameId } = useParams();
 
@@ -26,6 +29,21 @@ export const Details = () => {
             })
             .catch((err) => setError(err.message || err));
     }, [gameId]);
+
+    const deleteHandler = () => {
+        const popUp = confirm('Are you sure you want to delete this game?');
+
+        if (!popUp) {
+            return;
+        }
+
+        api.remove(auth.accessToken, gameId)
+            .then(() => {
+                deleteGame(gameId);
+                navigate('/catalog', { replace: true });
+            })
+            .catch((err) => setError(err.message || er));
+    };
 
     if (error) {
         return <h1 className="error">{error}</h1>;
@@ -42,7 +60,10 @@ export const Details = () => {
             <h1>Game Details</h1>
             <div className="info-section">
                 <div className="game-header">
-                    <img className="game-img" src={images[game.imageUrl]} />
+                    <img
+                        className="game-img"
+                        src={images[game.imageUrl] || game.imageUrl}
+                    />
                     <h1>{game.title}</h1>
                     <span className="levels">MaxLevel: {game.maxLevel}</span>
                     <p className="type">{game.category}</p>
@@ -52,7 +73,9 @@ export const Details = () => {
                     <h2>Comments:</h2>
                     <ul>
                         {comments.length > 0 ? (
-                            comments.map((x) => <Comment text={x.content} key={x._id}/>)
+                            comments.map((x) => (
+                                <Comment text={x.content} key={x._id} />
+                            ))
                         ) : (
                             <p className="no-comment">No comments.</p>
                         )}
@@ -63,7 +86,7 @@ export const Details = () => {
                         <Link to={`/catalog/${gameId}/edit`} className="button">
                             Edit
                         </Link>
-                        <Link to="#" className="button">
+                        <Link to="#" className="button" onClick={deleteHandler}>
                             Delete
                         </Link>
                     </div>
