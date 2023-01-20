@@ -1,31 +1,11 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import { createContext } from 'react';
 import { useFetch } from '../hooks/useFetch';
+import { gameReducer } from '../utils/gameReducer';
 
 export const GamesContext = createContext();
 
 const BASE_URL = 'http://localhost:3030/data/games';
-
-const gameReducer = (state, action) => {
-    switch (action.type) {
-        case 'ADD_GAMES':
-            return action.payload.map((x) => ({ ...x, comments: [] }));
-
-        case 'ADD_GAME':
-            return [...state, action.payload];
-
-        case 'DELETE_GAME':
-            return state.filter((game) => game._id !== action.gameId);
-
-        case 'EDIT_GAME':
-            return state.map((game) =>
-                game._id == action.gameId ? action.payload : game
-            );
-
-        default:
-            return state;
-    }
-};
 
 export const GamesContextProvider = (props) => {
     const [fetchedGames, error, isPending] = useFetch(BASE_URL);
