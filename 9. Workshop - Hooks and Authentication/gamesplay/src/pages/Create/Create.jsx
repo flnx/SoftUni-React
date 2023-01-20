@@ -10,7 +10,6 @@ export const Create = () => {
 
     const { addGame } = useContext(GamesContext);
     const { auth } = useContext(AuthContext);
-
     const navigate = useNavigate();
 
     const onSubmit = (inputData) => {

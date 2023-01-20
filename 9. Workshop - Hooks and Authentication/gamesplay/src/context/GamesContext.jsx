@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { createContext } from 'react';
 import { useFetch } from '../hooks/useFetch';
 
@@ -6,26 +6,59 @@ export const GamesContext = createContext();
 
 const BASE_URL = 'http://localhost:3030/data/games';
 
+const gameReducer = (state, action) => {
+    switch (action.type) {
+        case 'ADD_GAMES':
+            return action.payload.map((x) => ({ ...x, comments: [] }));
+
+        case 'ADD_GAME':
+            return [...state, action.payload];
+
+        case 'DELETE_GAME':
+            return state.filter((game) => game._id !== action.gameId);
+
+        case 'EDIT_GAME':
+            return state.map((game) =>
+                game._id == action.gameId ? action.payload : game
+            );
+
+        default:
+            return state;
+    }
+};
+
 export const GamesContextProvider = (props) => {
     const [fetchedGames, error, isPending] = useFetch(BASE_URL);
-    const [games, setGames] = useState([]);
+
+    const [games, dispatch] = useReducer(gameReducer, []);
 
     useEffect(() => {
-        setGames([...fetchedGames]);
+        dispatch({
+            type: 'ADD_GAMES',
+            payload: fetchedGames,
+        });
     }, [fetchedGames]);
 
     const addGame = (newGame) => {
-        setGames([...games, newGame]);
+        dispatch({
+            type: 'ADD_GAME',
+            payload: newGame,
+        });
     };
 
-    const deleteGame = (id) => {
-        setGames((prevState) => prevState.filter((x) => x._id != id));
+    const deleteGame = (gameId) => {
+        dispatch({
+            type: 'DELETE_GAME',
+            gameId,
+        });
     };
 
     const updateGame = (updatedGame) => {
-        setGames((prevState) =>
-            prevState.map((x) => (x._id == updatedGame._id ? updatedGame : x))
-        );
+        dispatch({
+            type: 'EDIT_GAME',
+            payload: updatedGame,
+            gameId: updatedGame._id,
+        });
     };
 
     const findGameById = (id) => {

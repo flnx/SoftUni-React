@@ -13,18 +13,15 @@ export const Details = () => {
     const [game, setGame] = useState(null);
     const [comments, setComments] = useState(null);
     const [error, setError] = useState(null);
+
     const { auth } = useContext(AuthContext);
     const { deleteGame } = useContext(GamesContext);
+    
     const navigate = useNavigate();
-
     const { gameId } = useParams();
 
     useEffect(() => {
-        const promises = 
-        [
-            api.getById(gameId),
-            api.getCommentsById(gameId)
-        ];
+        const promises = [api.getById(gameId), api.getCommentsById(gameId)];
 
         Promise.all(promises)
             .then(([gameData, commentsData]) => {

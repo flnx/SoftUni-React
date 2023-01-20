@@ -11,9 +11,8 @@ export const Edit = () => {
     const { auth } = useContext(AuthContext);
 
     const { gameId } = useParams();
-    const game = findGameById(gameId);
-
     const navigate = useNavigate();
+    const game = findGameById(gameId);
 
     const onSubmit = (inputData) => {
         const data = { ...inputData };
@@ -43,14 +42,14 @@ export const Edit = () => {
                         type="text"
                         id="title"
                         name="title"
-                        defaultValue={game?.title}
+                        defaultValue={game.title}
                     />
                     <label htmlFor="category">Category:</label>
                     <input
                         type="text"
                         id="category"
                         name="category"
-                        defaultValue={game?.category}
+                        defaultValue={game.category}
                     />
                     <label htmlFor="levels">MaxLevel:</label>
                     <input
@@ -58,20 +57,20 @@ export const Edit = () => {
                         id="maxLevel"
                         name="maxLevel"
                         min={1}
-                        defaultValue={game?.maxLevel}
+                        defaultValue={game.maxLevel}
                     />
                     <label htmlFor="game-img">Image:</label>
                     <input
                         type="text"
                         id="imageUrl"
                         name="imageUrl"
-                        defaultValue={game?.imageUrl}
+                        defaultValue={game.imageUrl}
                     />
                     <label htmlFor="summary">Summary:</label>
                     <textarea
                         name="summary"
                         id="summary"
-                        defaultValue={game?.summary}
+                        defaultValue={game.summary}
                     />
                     {error && <h2 className="error">{error}</h2>}
                     <input
