@@ -14,6 +14,7 @@ export const Details = () => {
     const [comments, setComments] = useState(null);
     const [error, setError] = useState(null);
 
+
     const { auth } = useContext(AuthContext);
     const { deleteGame } = useContext(GamesContext);
     

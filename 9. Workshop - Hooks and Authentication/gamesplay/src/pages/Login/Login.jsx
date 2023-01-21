@@ -1,25 +1,29 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import { useFormInput } from '../../hooks/useFormInput';
 import * as user from '../../service/user';
 
 export const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const { setUserData } = useContext(AuthContext);
-
     const navigate = useNavigate();
+    const email = useFormInput('');
+    const password = useFormInput('');
+
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        if (email == '' || password == '') {
+        if (email.value == '' || password.value == '') {
             return setError('Fields must not be empty');
         }
 
         try {
-            const userData = await user.login({ email, password });
+            const userData = await user.login({
+                email: email.value,
+                password: password.value,
+            });
             setUserData(userData);
 
             navigate('/', { replace: true });
@@ -38,15 +42,13 @@ export const Login = () => {
                         type="email"
                         name="email"
                         placeholder="Sokka@gmail.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        {...email}
                     />
                     <label htmlFor="login-pass">Password:</label>
                     <input
                         type="password"
                         name="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        {...password}
                     />
 
                     {error && <p className="error">{error}</p>}
