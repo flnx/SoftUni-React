@@ -1,15 +1,28 @@
 import { AuthContext } from '../../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useContext } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { fetchGames } from '../../service/data';
 
 export const Navbar = () => {
     const { auth } = useContext(AuthContext);
+    const location = useLocation();
+    const queryClient = useQueryClient();
+
+    const fetchGamesHomeOnHover = () => {
+        if (location.pathname == '/') return
+
+        queryClient.prefetchQuery({
+            queryKey: ['games'],
+            queryFn: fetchGames
+        });
+    }   
 
     return (
         <nav>
             <div className="nav-wrapper">
                 <h1>
-                    <Link className="home" to="/">
+                    <Link className="home" to="/" onMouseEnter={fetchGamesHomeOnHover}>
                         GamesPlay
                     </Link>
                 </h1>

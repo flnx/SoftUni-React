@@ -22,7 +22,7 @@ export const useGameDetails = (gameId) => {
             {
                 queryKey: ['comments', gameId],
                 queryFn: () => getCommentsById(gameId),
-                // staleTime: 1 * (60 * 1000),
+                staleTime: 1 * (60 * 1000),
                 // refetchInterval: 5 * (60 * 1000),
 
             },
@@ -42,15 +42,20 @@ export const useGameDetails = (gameId) => {
     };
 };
 
+
 export const useAddNewGame = () => {
     const queryClient = useQueryClient();
     const { auth } = useContext(AuthContext);
 
-    const { error: gameError, mutate: createPost, isLoading } = useMutation({
+    const {
+        error: gameError,
+        mutate: createPost,
+        isLoading,
+    } = useMutation({
         mutationFn: (gameData) => create(gameData, auth.accessToken),
-        onSuccess: () => {
-            // queryClient.setQueryData(['games', newGame]);
-            queryClient.invalidateQueries(['games']);
+        onSuccess: (newGame) => {
+            queryClient.setQueryData(['games', newGame._id], newGame);
+            queryClient.invalidateQueries(['games'], { exact: true }); 
         },
     });
 
@@ -61,22 +66,26 @@ export const useAddNewGame = () => {
     };
 };
 
-
-export const useRemoveGame = () => {
+export const useRemoveGame = (gameId) => {
     const queryClient = useQueryClient();
     const { auth } = useContext(AuthContext);
 
-    const { isLoading: isRemoving, error: removingError, mutate: removeGame } = useMutation({
-        mutationFn: (gameId) => remove(auth.accessToken, gameId),
+    const {
+        isLoading: isRemoving,
+        error: removingError,
+        mutate: removeGame,
+    } = useMutation({
+        mutationFn: () => remove(auth.accessToken, gameId),
         onSuccess: () => {
-            queryClient.invalidateQueries(['games'])
+            queryClient.setQueryData(['games'], (old) => 
+                old.filter((game) => game._id !== gameId)
+            );
         },
     });
 
     return {
         removeGame,
         isRemoving,
-        removingError
-    }
+        removingError,
+    };
 };
-

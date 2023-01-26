@@ -51,7 +51,7 @@ export const update = (data, accessToken, id) => {
 };
 
 export const remove = (accessToken, id) => {
-    return fetch(BASE_URL + endpoints.update(id), {
+    return fetch(BASE_URL + endpoints.remove(id), {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

@@ -10,7 +10,7 @@ import { useGameDetails, useRemoveGame } from '../../hooks/useGames';
 export const Details = () => {
     const { auth } = useContext(AuthContext);
     const { gameId } = useParams();
-    const { isRemoving, removingError, removeGame } = useRemoveGame();
+    const { isRemoving, removingError, removeGame } = useRemoveGame(gameId);
     const navigate = useNavigate();
 
     const { game, isGameLoading, gameError, comments, areCommentsLoading } =
