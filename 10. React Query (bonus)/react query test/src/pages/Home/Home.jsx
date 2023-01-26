@@ -1,12 +1,18 @@
-import { useContext } from 'react';
-import { GamesContext } from '../../context/GamesContext';
+// utils
+import { images } from '../../utils/images';
+
+// components
+import { LatestGames } from './LatestGames';
 import { LoadingTemplate } from '../../components/Loading';
 import { Error } from '../../components/Error';
-import { images } from '../../utils/images';
-import { LatestGames } from './LatestGames';
+import { useGames } from '../../hooks/useGames';
 
 export const Home = () => {
-    const { games, error, isPending } = useContext(GamesContext);
+    const { status, error, data: games } = useGames();
+
+    if (error) {
+        return <Error error={error} />;
+    }
 
     return (
         <section id="welcome-world">
@@ -17,13 +23,11 @@ export const Home = () => {
             <img src={images.heroImg} alt="hero" />
             <div id="home-page">
                 <h1>Latest Games</h1>
-                {isPending ? 
+                {status == 'loading' ? (
                     <LoadingTemplate />
-                  : error ? 
-                    <Error error={error} />
-                  : 
+                ) : (
                     <LatestGames games={games} />
-                 }
+                )}
             </div>
         </section>
     );

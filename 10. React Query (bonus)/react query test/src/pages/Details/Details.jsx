@@ -1,61 +1,42 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 
-import { GamesContext } from '../../context/GamesContext';
 import { AuthContext } from '../../context/AuthContext';
-
-import { Comment } from './Comment';
-
-import * as api from '../../service/data';
 import { images } from '../../utils/images';
+import { Comment } from './Comment';
+import { Error } from '../../components/Error';
+import { useGameDetails, useRemoveGame } from '../../hooks/useGames';
 
 export const Details = () => {
-    const [game, setGame] = useState(null);
-    const [comments, setComments] = useState(null);
-    const [error, setError] = useState(null);
-
-
     const { auth } = useContext(AuthContext);
-    const { deleteGame } = useContext(GamesContext);
-    
-    const navigate = useNavigate();
     const { gameId } = useParams();
+    const { isRemoving, removingError, removeGame } = useRemoveGame();
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        const promises = [api.getById(gameId), api.getCommentsById(gameId)];
+    const { game, isGameLoading, gameError, comments, areCommentsLoading } =
+        useGameDetails(gameId);
 
-        Promise.all(promises)
-            .then(([gameData, commentsData]) => {
-                setGame(gameData);
-                setComments(commentsData);
-            })
-            .catch((err) => setError(err.message || err));
-    }, [gameId]);
-
-    const deleteHandler = () => {
+    const removeHandler = () => {
         const popUp = confirm('Are you sure you want to delete this game?');
+        if (!popUp) return;
 
-        if (!popUp) {
-            return;
-        }
-
-        api.remove(auth.accessToken, gameId)
-            .then(() => {
-                deleteGame(gameId);
-                navigate('/catalog', { replace: true });
-            })
-            .catch((err) => setError(err.message || er));
+        removeGame(gameId, {
+            onSuccess: () => {
+                navigate('/');
+            }
+        });
     };
 
-    if (error) {
-        return <h1 className="error">{error}</h1>;
-    }
-
-    if (!game) {
+    if (isGameLoading) {
         return <h1 className="error">Loading....</h1>;
     }
 
+    if (gameError || removingError) {
+        return <Error error={gameError || removingError} />;
+    }
+
     const isOwner = auth?._id === game?._ownerId;
+    const btnDisabled = isRemoving ? 'disabled-btn' : '';
 
     return (
         <section id="game-details">
@@ -74,7 +55,8 @@ export const Details = () => {
                 <div className="details-comments">
                     <h2>Comments:</h2>
                     <ul>
-                        {comments.length > 0 ? (
+                        {areCommentsLoading && <h1>Loading...</h1>}
+                        {!areCommentsLoading && comments.length > 0 ? (
                             comments.map((x) => (
                                 <Comment text={x.content} key={x._id} />
                             ))
@@ -85,10 +67,10 @@ export const Details = () => {
                 </div>
                 {isOwner && (
                     <div className="buttons">
-                        <Link to={`/catalog/${gameId}/edit`} className="button">
+                        <Link to={`/catalog/${gameId}/edit`} className={`button ${btnDisabled}`}>
                             Edit
                         </Link>
-                        <Link to="#" className="button" onClick={deleteHandler}>
+                        <Link to="#" className={`button ${btnDisabled}`} onClick={removeHandler}>
                             Delete
                         </Link>
                     </div>

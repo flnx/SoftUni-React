@@ -1,6 +1,7 @@
 export const errorHandler = async (response) => {
     if (!response.ok) {
-        throw await response.json();
+        const error = await response.json();
+        throw error;
     }
 
     if (response.status == 204) {

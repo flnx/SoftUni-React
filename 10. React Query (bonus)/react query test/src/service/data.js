@@ -10,10 +10,16 @@ const endpoints = {
     games: '/games',
 };
 
+export const fetchGames = async () => {
+    const res = await fetch(BASE_URL + endpoints.games);
+
+    return errorHandler(res);
+};
+
 export const getById = async (id) => {
     const res = await fetch(BASE_URL + endpoints.game(id));
 
-    return errorHandler(res);
+    return res.json();
 };
 
 export const getCommentsById = async (gameId) => {
@@ -22,14 +28,14 @@ export const getCommentsById = async (gameId) => {
     return errorHandler(res);
 };
 
-export const create = (data, accessToken) => {
+export const create = (gameData, accessToken) => {
     return fetch(BASE_URL + endpoints.games, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-Authorization': accessToken,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(gameData),
     }).then(errorHandler);
 };
 

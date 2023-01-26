@@ -1,34 +1,34 @@
-import { useContext, useState } from 'react';
-import { GamesContext } from '../../context/GamesContext';
+import { useState } from 'react';
 import { handleEmptyFields, submitHandler } from '../../utils/utils';
-import * as gameService from '../../service/data';
-import { AuthContext } from '../../context/AuthContext';
+import { useAddNewGame } from '../../hooks/useGames';
+import { Error } from '../../components/Error';
 import { useNavigate } from 'react-router-dom';
 
 export const Create = () => {
     const [error, setError] = useState(false);
-
-    const { addGame } = useContext(GamesContext);
-    const { auth } = useContext(AuthContext);
+    const { gameError, createPost, isLoading } = useAddNewGame();
     const navigate = useNavigate();
 
-    const onSubmit = (inputData) => {
+    const onSubmit = async (inputData) => {
         const data = { ...inputData };
-
         const hasEmptyFields = handleEmptyFields(data);
 
         if (hasEmptyFields) {
             return setError("Fields can't be empty!");
         }
 
-        gameService
-            .create(data, auth.accessToken)
-            .then((gameData) => {
-                addGame(gameData);
-                navigate(`/catalog/${gameData._id}`);
-            })
-            .catch((err) => setError(err.message || err));
+        createPost(data, {
+            onSuccess: (newGame) => {
+                navigate(`/catalog/${newGame._id}`)
+            }
+        });
     };
+
+    if (gameError) {
+        return <Error error={gameError} />;
+    }
+
+    const btnDisabled = isLoading ? 'disabled-btn' : '';
 
     return (
         <section id="create-page" className="auth">
@@ -64,9 +64,10 @@ export const Create = () => {
                     <textarea name="summary" id="summary" defaultValue={''} />
                     <h2 className="error">{error}</h2>
                     <input
-                        className="btn submit"
+                        disabled={isLoading}
+                        className={`btn submit ${btnDisabled}`}
                         type="submit"
-                        value="Create Game"
+                        value={isLoading ? 'Loading...' : 'Create Game'}
                     />
                 </div>
             </form>
