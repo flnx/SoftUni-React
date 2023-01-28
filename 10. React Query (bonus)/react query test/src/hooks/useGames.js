@@ -79,7 +79,8 @@ export const useRemoveGame = (gameId) => {
         onSuccess: () => {
             queryClient.setQueryData(['games'], (old) => 
                 old.filter((game) => game._id !== gameId)
-            );
+            ),
+            queryClient.invalidateQueries(['games'], { exact: true });
         },
     });
 
@@ -89,3 +90,4 @@ export const useRemoveGame = (gameId) => {
         removingError,
     };
 };
+
