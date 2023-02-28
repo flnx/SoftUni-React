@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Component } from 'react';
 
 export class Navbar extends Component {
-    static contentType = AuthContext;
+    static contextType = AuthContext;
 
     render() {
         const { auth } = this.context;
