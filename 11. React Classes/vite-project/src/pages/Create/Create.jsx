@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import * as gameService from '../../service/data';
 import { handleEmptyFields, submitHandler } from '../../utils/utils';
@@ -49,7 +50,6 @@ class CreateContent extends Component {
             .create(data, auth.accessToken)
             .then((gameData) => {
                 addGame(gameData);
-                // navigate(`/catalog/${gameData._id}`);
             })
             .catch((err) => {
                 this.setState({ error: err.message || err });

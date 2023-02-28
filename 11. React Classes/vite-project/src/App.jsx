@@ -3,7 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 
 // Components
 import { Navbar } from './components/Navbar/Navbar';
-import { Home, Catalog, Create, Edit, Details, Login, Register } from './pages/index';
+import { Home, Catalog, Create, Edit, Login, Register } from './pages/index';
+import Details from './pages/Details/Details';
 import { Logout } from './components/Logout';
 import { ProtectedRoute } from './components/common/ProtectedRoute';
 

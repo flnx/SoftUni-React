@@ -1,116 +1,167 @@
-import { useContext, useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { GamesContext } from '../../context/GamesContext';
 import { AuthContext } from '../../context/AuthContext';
 
-import { Comment } from './Comment';
-
-import * as api from '../../service/data';
 import { images } from '../../utils/images';
 
-export const Details = () => {
-    const [game, setGame] = useState(null);
-    const [comments, setComments] = useState(null);
-    const [error, setError] = useState(null);
+import { Comment } from './Comment';
+import { withRouter } from '../../HOC/withRouter';
 
+import * as api from '../../service/data';
 
-    const { auth } = useContext(AuthContext);
-    const { deleteGame } = useContext(GamesContext);
-    
-    const navigate = useNavigate();
-    const { gameId } = useParams();
+class Details extends Component {
+    constructor(props) {
+        super(props);
+    }
 
-    useEffect(() => {
+    render() {
+        return (
+            <AuthContext.Consumer>
+                {({ auth }) => (
+                    <GamesContext.Consumer>
+                        {({ deleteGame }) => (
+                            <DetailsContent
+                                auth={auth}
+                                deleteGame={deleteGame}
+                                params={this.props.params}
+                                navigate={this.props.navigate}
+                            />
+                        )}
+                    </GamesContext.Consumer>
+                )}
+            </AuthContext.Consumer>
+        );
+    }
+}
+
+class DetailsContent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            game: null,
+            comments: null,
+            error: false,
+        };
+
+        this.deleteHandler = this.deleteHandler.bind(this);
+    }
+
+    componentDidMount() {
+        const { gameId } = this.props.params;
+
         const promises = [api.getById(gameId), api.getCommentsById(gameId)];
 
         Promise.all(promises)
             .then(([gameData, commentsData]) => {
-                setGame(gameData);
-                setComments(commentsData);
+                this.setState({
+                    game: gameData,
+                    comments: commentsData,
+                });
             })
-            .catch((err) => setError(err.message || err));
-    }, [gameId]);
+            .catch((err) => this.setState({ error: err.message || err }));
+    }
 
-    const deleteHandler = () => {
+    deleteHandler() {
+        const { gameId } = this.props.params;
+
         const popUp = confirm('Are you sure you want to delete this game?');
 
         if (!popUp) {
             return;
         }
 
-        api.remove(auth.accessToken, gameId)
+        api.remove(this.props.auth.accessToken, gameId)
             .then(() => {
-                deleteGame(gameId);
-                navigate('/catalog', { replace: true });
+                this.props.deleteGame(gameId);
+                this.props.navigate('/catalog', { replace: true });
             })
-            .catch((err) => setError(err.message || er));
-    };
-
-    if (error) {
-        return <h1 className="error">{error}</h1>;
+            .catch((err) => this.setState({ error: err.message || er }));
     }
 
-    if (!game) {
-        return <h1 className="error">Loading....</h1>;
-    }
+    render() {
+        const game = this.state.game;
+        const comments = this.state.comments;
+        const error = this.state.error;
+        const auth = this.props.auth;
+        const { gameId } = this.props.params;
 
-    const isOwner = auth?._id === game?._ownerId;
+        if (error) {
+            return <h1 className="error">{error}</h1>;
+        }
 
-    return (
-        <section id="game-details">
-            <h1>Game Details</h1>
-            <div className="info-section">
-                <div className="game-header">
-                    <img
-                        className="game-img"
-                        src={images[game.imageUrl] || game.imageUrl}
-                    />
-                    <h1>{game.title}</h1>
-                    <span className="levels">MaxLevel: {game.maxLevel}</span>
-                    <p className="type">{game.category}</p>
-                </div>
-                <p className="text">{game.summary}</p>
-                <div className="details-comments">
-                    <h2>Comments:</h2>
-                    <ul>
-                        {comments.length > 0 ? (
-                            comments.map((x) => (
-                                <Comment text={x.content} key={x._id} />
-                            ))
-                        ) : (
-                            <p className="no-comment">No comments.</p>
-                        )}
-                    </ul>
-                </div>
-                {isOwner && (
-                    <div className="buttons">
-                        <Link to={`/catalog/${gameId}/edit`} className="button">
-                            Edit
-                        </Link>
-                        <Link to="#" className="button" onClick={deleteHandler}>
-                            Delete
-                        </Link>
+        if (!game) {
+            return <h1 className="error">Loading....</h1>;
+        }
+
+        const isOwner = auth?._id === game?._ownerId;
+        return (
+            <section id="game-details">
+                <h1>Game Details</h1>
+                <div className="info-section">
+                    <div className="game-header">
+                        <img
+                            className="game-img"
+                            src={images[game.imageUrl] || game.imageUrl}
+                        />
+                        <h1>{game.title}</h1>
+                        <span className="levels">
+                            MaxLevel: {game.maxLevel}
+                        </span>
+                        <p className="type">{game.category}</p>
                     </div>
+                    <p className="text">{game.summary}</p>
+                    <div className="details-comments">
+                        <h2>Comments:</h2>
+                        <ul>
+                            {comments.length > 0 ? (
+                                comments.map((x) => (
+                                    <Comment text={x.content} key={x._id} />
+                                ))
+                            ) : (
+                                <p className="no-comment">No comments.</p>
+                            )}
+                        </ul>
+                    </div>
+                    {isOwner && (
+                        <div className="buttons">
+                            <Link
+                                to={`/catalog/${gameId}/edit`}
+                                className="button"
+                            >
+                                Edit
+                            </Link>
+                            <Link
+                                to="#"
+                                className="button"
+                                onClick={this.deleteHandler}
+                            >
+                                Delete
+                            </Link>
+                        </div>
+                    )}
+                </div>
+                {auth?.email && !isOwner && (
+                    <article className="create-comment">
+                        <label>Add new comment:</label>
+                        <form className="form">
+                            <textarea
+                                name="comment"
+                                placeholder="Comment......"
+                                defaultValue={''}
+                            />
+                            <input
+                                className="btn submit"
+                                type="submit"
+                                defaultValue="Add Comment"
+                            />
+                        </form>
+                    </article>
                 )}
-            </div>
-            {auth?.email && !isOwner && (
-                <article className="create-comment">
-                    <label>Add new comment:</label>
-                    <form className="form">
-                        <textarea
-                            name="comment"
-                            placeholder="Comment......"
-                            defaultValue={''}
-                        />
-                        <input
-                            className="btn submit"
-                            type="submit"
-                            defaultValue="Add Comment"
-                        />
-                    </form>
-                </article>
-            )}
-        </section>
-    );
-};
+            </section>
+        );
+    }
+}
+
+export default withRouter(Details);
