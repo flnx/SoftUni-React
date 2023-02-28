@@ -5,10 +5,6 @@ import { AllGames } from './AllGames';
 import { Error } from '../../components/Error';
 
 export class Catalog extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     static contextType = GamesContext;
 
     render() {
